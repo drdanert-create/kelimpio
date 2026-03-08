@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kelimpio - La marca que brilla</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-white shadow p-4 flex justify-between items-center">
+  <div class="flex items-center gap-3">
+    <img src="logo.jpg" style="height:50px"/>
+    <h1 class="text-xl font-bold">Kelimpio</h1>
+  </div>
+  <button onclick="toggleCart()" class="bg-blue-600 text-white px-4 py-2 rounded">
+    Carrito (<span id="cart-count">0</span>)
+  </button>
+</header>
+
+<section class="text-center p-10 bg-blue-500 text-white">
+  <h2 class="text-4xl font-bold">La marca que brilla</h2>
+  <p>Productos de limpieza para hogar y empresas</p>
+</section>
+
+<section class="p-10 grid grid-cols-3 gap-6">
+
+<div class="bg-white p-4 rounded shadow text-center">
+<h3 class="font-bold">Lavandina</h3>
+<p>$1200</p>
+<button onclick="addToCart('Lavandina',1200)" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+Agregar
+</button>
+</div>
+
+<div class="bg-white p-4 rounded shadow text-center">
+<h3 class="font-bold">Detergente</h3>
+<p>$900</p>
+<button onclick="addToCart('Detergente',900)" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+Agregar
+</button>
+</div>
+
+<div class="bg-white p-4 rounded shadow text-center">
+<h3 class="font-bold">Desinfectante</h3>
+<p>$1500</p>
+<button onclick="addToCart('Desinfectante',1500)" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+Agregar
+</button>
+</div>
+
+</section>
+
+<div id="cart" class="fixed right-0 top-0 w-80 h-full bg-white shadow p-4 hidden">
+<h2 class="text-xl font-bold mb-4">Carrito</h2>
+<ul id="cart-items"></ul>
+<p class="font-bold mt-4">Total: $<span id="total">0</span></p>
+<button onclick="checkout()" class="bg-green-500 text-white w-full py-2 mt-4 rounded">
+Comprar por WhatsApp
+</button>
+</div>
+
+<script>
+
+let cart=[]
+let total=0
+
+function addToCart(name,price){
+cart.push({name,price})
+total+=price
+updateCart()
+}
+
+function updateCart(){
+document.getElementById("cart-count").innerText=cart.length
+document.getElementById("total").innerText=total
+
+let list=""
+cart.forEach(p=>{
+list+=`<li>${p.name} $${p.price}</li>`
+})
+
+document.getElementById("cart-items").innerHTML=list
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("hidden")
+}
+
+function checkout(){
+let message="Pedido Kelimpio:%0A"
+
+cart.forEach(p=>{
+message+=`${p.name} $${p.price}%0A`
+})
+
+message+=`Total $${total}`
+
+window.open(`https://wa.me/543888500027?text=${message}`)
+}
+
+</script>
+
+</body>
+</html>
